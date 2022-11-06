@@ -1,0 +1,50 @@
+spring:
+  datasource:
+    name: ${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    url: jdbc:${DB_VENDOR}://${DB_HOST}:${DB_PORT}/${DB_NAME}
+  application:
+    name: Quicker API
+  aop:
+    proxy-target-class: false
+  jackson:
+    default-property-inclusion: NON_NULL
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+      enabled: true
+  messages:
+    basename: messages/message
+
+server:
+  shutdown: GRACEFUL
+  forward-headers-strategy: NATIVE
+
+management:
+  server:
+    port: ${MANAGEMENT_SERVER_PORT:8081}
+  endpoint:
+    health:
+      enabled: true
+      probes:
+        enabled: true
+      show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org.springframework: INFO
+
+springdoc:
+  use-management-port: true
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
