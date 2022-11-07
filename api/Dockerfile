@@ -1,4 +1,4 @@
-FROM amazoncorretto:17
+FROM eclipse-temurin:17-jre
 WORKDIR /opt/app/
 
 ENV TZ=Etc/UTC \
@@ -8,9 +8,22 @@ ENV TZ=Etc/UTC \
 
 EXPOSE ${SERVER_PORT}
 
-ARG JAR_FILE=build/libs/*-boot.jar
-COPY --chown=nobody ${JAR_FILE} application.jar
+RUN addgroup --system --gid 1001 spring \
+    && adduser --system --uid 1001 quicker --gid 1001
 
-USER nobody
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl jq \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG JAR_FILE=build/libs/*-boot.jar
+COPY --chown=1001:1001 ${JAR_FILE} application.jar
+
+USER quicker
 
 ENTRYPOINT ["java", "-jar", "application.jar"]
+
+HEALTHCHECK \
+    --start-period=30s --interval=30s --timeout=3s --retries=3 \
+    CMD curl --silent --fail --request GET \
+    http://localhost:${MANAGEMENT_SERVER_PORT}/actuator/health \
+    | jq --exit-status '.status == "UP"' || exit 1
