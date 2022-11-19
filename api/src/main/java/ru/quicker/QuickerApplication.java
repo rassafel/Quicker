@@ -1,4 +1,4 @@
-package ru.rassafel.quicker;
+package ru.quicker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
