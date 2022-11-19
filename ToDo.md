@@ -12,13 +12,9 @@
 - profile privacy (public, only authorized, only friends)
 - link with OpenGraph
 
-# Friends
-
-# Subscriptions
-
 # Feed
 
-# Posts
+## Posts
 
 - text post
 - reactions
@@ -26,8 +22,18 @@
 - media attachments (photo, link with preview)
 - links with OpenGraph
 
-# Post Comments
+### Post Comments
 
 - text comment
 - reactions
 - media attachments
+
+## Subscriptions
+
+## Friends
+
+# Messages
+
+- chat with user
+- chat with users
+- end-to-end encription (Diffie-Hellman key exchange protocol)
